@@ -1,22 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>To-Do App</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Task List with Mark as Done</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      padding-top: 100px;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .input-section {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      font-size: 14px;
+    }
+
+    /* General button hover effect */
+    button:hover {
+      opacity: 0.85;
+    }
+
+    /* Mark as Done button - green */
+    button.mark-done {
+      background-color: #28a745;
+      color: white;
+      margin-right: 6px;
+    }
+
+    button.mark-done:hover {
+      background-color: #218838;
+    }
+
+    /* Edit button - blue */
+    button.edit {
+      background-color: #007bff;
+      color: white;
+      margin-right: 6px;
+    }
+
+    button.edit:hover {
+      background-color: #0056b3;
+    }
+
+    /* Delete button - red */
+    button.delete {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    button.delete:hover {
+      background-color: #b02a37;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    /* List item styling */
+    li {
+      background: #f9f9f9;
+      padding: 10px;
+      margin-bottom: 8px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Task text */
+    li span {
+      flex: 1;
+      word-break: break-word;
+    }
+
+    /* When task is done */
+    li span.done {
+      text-decoration: line-through;
+      color: #6c757d;
+    }
+  </style>
 </head>
 <body>
-
   <div class="container">
-    <h1>📝 To-Do List</h1>
+    <h1>My Tasks</h1>
     <div class="input-section">
-      <input type="text" id="taskInput" placeholder="Enter a new task..." />
-      <button onclick="addTask()">Add</button>
+      <input type="text" id="taskInput" placeholder="Enter your task..." />
+      <button onclick="addTask()">Add Task</button>
     </div>
     <ul id="taskList"></ul>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    function addTask() {
+      const taskInput = document.getElementById("taskInput");
+      const taskText = taskInput.value.trim();
+
+      if (taskText === "") {
+        alert("Please enter a task!");
+        return;
+      }
+
+      const taskList = document.getElementById("taskList");
+
+      // Create new list item
+      const li = document.createElement("li");
+
+      // Create span to hold the task text
+      const taskSpan = document.createElement("span");
+      taskSpan.textContent = taskText;
+      li.appendChild(taskSpan);
+
+      // Mark as Done button
+      const doneBtn = document.createElement("button");
+      doneBtn.textContent = "Mark as Done";
+      doneBtn.classList.add("mark-done");
+      doneBtn.onclick = () => {
+        taskSpan.classList.toggle("done");
+        if (taskSpan.classList.contains("done")) {
+          doneBtn.textContent = "Undo";
+        } else {
+          doneBtn.textContent = "Mark as Done";
+        }
+      };
+      li.appendChild(doneBtn);
+
+      // Edit button
+      const editBtn = document.createElement("button");
+      editBtn.textContent = "Edit";
+      editBtn.classList.add("edit");
+      editBtn.onclick = () => {
+        const newText = prompt("Edit your task:", taskSpan.textContent);
+        if (newText !== null && newText.trim() !== "") {
+          taskSpan.textContent = newText.trim();
+        }
+      };
+      li.appendChild(editBtn);
+
+      // Delete button
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "Delete";
+      deleteBtn.classList.add("delete");
+      deleteBtn.onclick = () => li.remove();
+      li.appendChild(deleteBtn);
+
+      taskList.appendChild(li);
+      taskInput.value = "";
+      taskInput.focus();
+    }
+  </script>
 </body>
 </html>
 

@@ -34,14 +34,48 @@ input[type="text"] {
 button {
   padding: 8px 12px;
   border: none;
-  background-color: #007bff;
-  color: white;
   border-radius: 6px;
   cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
+/* General button hover effect */
 button:hover {
+  opacity: 0.85;
+}
+
+/* Mark as Done button - green */
+button.mark-done {
+  background-color: #28a745; /* Bootstrap green */
+  color: white;
+  margin-right: 6px;
+}
+
+/* Mark as Done hover */
+button.mark-done:hover {
+  background-color: #218838;
+}
+
+/* Edit button - blue */
+button.edit {
+  background-color: #007bff;
+  color: white;
+  margin-right: 6px;
+}
+
+button.edit:hover {
   background-color: #0056b3;
+}
+
+/* Delete button - red */
+button.delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+button.delete:hover {
+  background-color: #b02a37;
 }
 
 ul {
@@ -50,6 +84,7 @@ ul {
   margin-top: 20px;
 }
 
+/* List item styling */
 li {
   background: #f9f9f9;
   padding: 10px;
@@ -58,13 +93,18 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 6px;
 }
 
-li button {
-  background: red;
-  border: none;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  cursor: pointer;
+/* Task text */
+li span {
+  flex: 1; /* Take available space */
+  word-break: break-word;
 }
+
+/* When task is done, line-through and lighter text */
+li span.done {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
